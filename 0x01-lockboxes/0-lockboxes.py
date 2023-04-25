@@ -1,36 +1,29 @@
 #!/usr/bin/python3
-"""method that determines if all the boxes can be opened."""
+
+"""
+Problem: You have n number of locked boxes in front of you.
+         Each box is numbered sequentially from 0 to n - 1
+         and each box may contain keys to the other boxes.
+Task: Write a method that determines if all the boxes can be opened.
+"""
 
 
 def canUnlockAll(boxes):
-    """ method that verifies unlocking """
-    if type(boxes) is not list or not all(type(box) is list for box in boxes):
+    """
+    Function that checks with boolean value if the list type and
+    length to invoke two for iterations one to traverse the list
+    and the other to compaer if key is idx or not in order to open
+    """
+    if type(boxes) is not list:
         return False
-    # check if list is empty
-    if len(boxes) == 0:
+    elif (len(boxes)) == 0:
         return False
-    # check if only exist one box
-    if len(boxes) == 1:
-        return True
-    # check if first box is empty
-    if not boxes[0] and len(boxes) > 1:
-        return False
-    # dictionary of all boxes, all boxes are lock here
-    unlock = {k: False for k in range(len(boxes))}
-    # unlock first box
-    unlock[0] = True
-    # List of all key's first box
-    keys = [key for key in boxes[0]]
-    # Process of unlock boxes
-    while keys:
-        new_key = []
-        for key in keys:
-            if key in unlock.keys() and unlock[key] is False:
-                new_key += boxes[key]
-                unlock[key] = True
-        # If all boxes unlock return True
-        if all(unlock.values()) and len(unlock) == len(boxes):
-            return True
-        # Change keys for the new keys to check
-        keys = new_key
-    return False
+    for k in range(1, len(boxes) - 1):
+        boxes_checked = False
+        for idx in range(len(boxes)):
+            boxes_checked = k in boxes[idx] and k != idx
+            if boxes_checked:
+                break
+        if boxes_checked is False:
+            return boxes_checked
+    return True
