@@ -1,65 +1,26 @@
 #!/usr/bin/python3
-def canUnlockAll(boxes):   
-    if not boxes or ( type(boxes) != list):
+"""
+You have n number of locked boxes in front of you.
+Each box is numbered sequentially
+from 0 to n - 1 and each box may
+Contain keys to the other boxes.
+"""
+
+
+def canUnlockAll(boxes):
+    """
+    a method that determines if all the boxes can be opened.
+    :param boxes:
+    :return: True or False
+    """
+    if not boxes or type(boxes) is not list:
         return False
-    keyList=[]
-    hasMoreKeys = False
-    countBoxes = len(boxes)
-    boxesUnlock = setBoxesUnlock(countBoxes)
-    for i in range(countBoxes):
-        if( type(boxes[i]) == list ):
-            if i == 0:
-                keyList.append(0)
-                setKeys(boxes[i], keyList,boxesUnlock)
-            if boxesUnlock[i] == 0 and keyList.count(i) > 0:
-                keyList = unlockBox(keyList,boxesUnlock,boxes)  
-        else:
-            return False
-    if boxesUnlock.count(0) == 0:
+
+    unlocked = [0]
+    for n in unlocked:
+        for key in boxes[n]:
+            if key not in unlocked and key < len(boxes):
+                unlocked.append(key)
+    if len(unlocked) == len(boxes):
         return True
     return False
-
-def unlockBox(keys,boxesUnlock,boxes):
-    keys_copy = []
-    if len(keys) >0:
-        if keys[0] < len(boxesUnlock):
-            boxesUnlock[keys[0]] = 1
-            if not boxes[keys[0]] or ( type(boxes[keys[0]]) == list):
-                setKeys(boxes[keys[0]],keys,boxesUnlock)
-            keys.pop(0)
-            unlockBox(keys,boxesUnlock,boxes)
-    return keys
-
-def setKeys(box, keyList,boxesUnlock):
-    if box:
-        for key in box:
-            if isInteger(key):
-                if key < len(boxesUnlock) and keyList.count(key) == 0 and boxesUnlock[key] == 0:
-                    keyList.append(key) 
-
-def setBoxesUnlock(count):
-    boxes = []
-    for i in range(count):
-        boxes.append(0)
-    return boxes 
-        
-def isInteger(str):
-    is_int = True
-    try:
-        int(str)
-    except ValueError:
-        is_int = False
-
-    return is_int        
-        
-#  X    X    X    X    X
-#[[1], [2], [3], [4], []]
-#  0    1    2    3   4
-
-#     X       X       X          X       X     X      X
-#[[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
-#     0       1       2          3       4      5     6
-
-#  X       X       X            X
-#[[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
-#   0      1       2       3    4     5       6
