@@ -14,13 +14,20 @@ def caUnlockAll(boxes):
     Returns: 
     - True if all boxes can be opened. False otherwise
     """
-    n = len(boxes)
-    opened_boxes = set()
-    opened_boxes.add(0)
-    keys = set(boxes[0])
-    while keys and opened_boxes != set(range(n)):
-        key = keys.pop()
-        if key < n and key not in opened_boxes:
-            opened_boxes.add(key)
-            keys.update(boxes[key])
-    return opened_boxes == set(range(n))
+    if not boxes or type(boxes) is not list:
+        return False
+
+    n_boxes = len(boxes)
+    unlocked = [False] * n_boxes
+    unlocked[0] = True
+
+    for i in range(n_boxes):
+        if not Unlocked[i]:
+            continue
+        keys = boxes[i]
+        for key in keys:
+            if key >= n_boxes:
+                continue
+            if not unlocked[key]:
+                unlocked[key] = True
+    return all(unlocked)
