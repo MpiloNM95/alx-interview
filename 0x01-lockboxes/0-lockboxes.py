@@ -1,30 +1,58 @@
 #!/usr/bin/python3
-""" Module that checks locked boxes """
+""" lockboxes interview challenge """
 
 
 def canUnlockAll(boxes):
-    """ Method that determines if all boxes can be opened """
+    """a method that determines if all the boxes can be opened."""
+    numofboxes = len(boxes)
 
-    if boxes == 0:
-        return False
+    # create an array with the status of each box
+    locked_unlocked = []
+    keys_list = []
 
-    if not isinstance(boxes, list):
-        return False
+    # iterate through each box to set status for each
+    for i in range(numofboxes):
+        locked_unlocked.append('locked')
+    locked_unlocked[0] = 'unlocked'
 
-    if len(boxes) == 0:
-        return False
+    # append first set of key(s) and unlock
+    for key in boxes[0]:
+        keys_list.append(key)
+    for key in keys_list:
+        if key:
+            locked_unlocked[key] = 'unlocked'
+    # iterate through the status of each box in boxes
+    for status in range(len(locked_unlocked)):
+        for key in keys_list:
+            if key:
+                locked_unlocked[key] = 'unlocked'
 
-    check = [0]
-    list_ing = [i for i in range(len(boxes))]
+        if locked_unlocked[status] == 'unlocked':
+            for key in boxes[status]:
+                keys_list.append(key)
+        # let's unlock some boxes which we have the keys
+        for key in keys_list:
+            locked_unlocked[key] = 'unlocked'
+        # reset keys_list, not needed but for better
+        # debugging and visualisation.
+        keys_list = []
 
-    for in_check in check:
-        for in_boxes in boxes[in_check]:
-            if in_boxes not in check and in_boxes in list_ing:
-                if in_boxes >= len(boxes):
-                    return False
-                check.append(in_boxes)
+        # go through the status again and get keys of the newly
+        # unlocked boxes
+        for statuss in range(len(locked_unlocked)):
+            if locked_unlocked[statuss] == 'unlocked':
+                for key in boxes[statuss]:
+                    keys_list.append(key)
 
-    if len(check) == len(boxes):
-        return True
-    else:
-        return False
+    '''after checking and setting the status n number of times
+    check if any status is still 'locked', if any is still locked,
+    it means the unlocking process for all boxes was not successful
+    so return 'false'. if none is locked, return 'true'.
+    '''
+    for status in range(len(locked_unlocked)):
+        if locked_unlocked[status] == 'unlocked':
+            pass
+        else:
+            return False
+
+    return True
