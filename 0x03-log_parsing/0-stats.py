@@ -46,4 +46,3 @@ except KeyboardInterrupt:
 
 print_statistics()
 
-if __name__ == '__main__':
