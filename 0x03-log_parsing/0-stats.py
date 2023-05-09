@@ -47,4 +47,3 @@ except KeyboardInterrupt:
 print_statistics()
 
 if __name__ == '__main__':
-    process_line
