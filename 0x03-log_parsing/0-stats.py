@@ -4,45 +4,35 @@ Python script that stdin computes metrics
 """
 import sys
 
-
-line_count = 0
 total_size = 0
-status_code_counts = {}
-
-
-def print_statistics():
-    print(f"Total file size: {total_size}")
-    for code in sorted(status_code_counts):
-        if status_code_counts[code] > 0:
-            print(f"{code}: {status_code_counts[code]}")
-    print()
-
-
-def process_line(line):
-    global line_count, total_size, status_code_counts
-    line_count += 1
-    if line_count > 10:
-        print_statistics()
-        line_count = 1
-    parts = line.split()
-    if len(parts) != 10:
-        return
-    try:
-        code = int(parts[8])
-        size = int(parts[9])
-    except ValueError:
-        return
-    total_size += size
-    status_code_counts[code] = status_code_counts.get(code, 0) + 1
+status_counts = {}
 
 try:
-    for line in sys.stdin:
-        process_line(line)
+    for line_number, line in enumerate(sys.stdin, 1):
+        line = line.strip()
+
+        if not line.startswith('"GET /projects/260 HTTP/1.1"'):
+            continue
+
+        parts = line.split()
+        if len(parts) < 6:
+            continue
+
+        status_code = parts[-2]
+        file_size = int(parts[-1])
+
+        total_size += file_size
+
+        if status_code.isdigit():
+            status_code = int(status_code)
+            status_counts[status_code] = status_counts.get(status.code, 0) + 1
+
+        if line_number % 10 == 0:
+            print(f"Total file size: {total_size}")
+            for code in sorted(status_counts):
+                print(f"{code}: {status_counts[code]}")
 
 except KeyboardInterrupt:
-    pass
-
-print_statistics()
-
-if __name__ == '__main__':
-    process_line
+    print(f"Total file size: {total_size}")
+    for code in sorted(status_counts):
+        print(f"{code}: {status_counts[code]}")
