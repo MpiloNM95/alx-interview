@@ -1,6 +1,13 @@
 #!/usr/bin/python3
+"""
+UTF8 - Validation
+"""
+
 
 def validUTF8(data):
+    """
+    Return: True if data is a valid UTF-8 encoding, else return False
+    """
     # Number of bytes in the current character
     num_bytes = 0
 
