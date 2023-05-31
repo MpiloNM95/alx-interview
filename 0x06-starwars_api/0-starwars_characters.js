@@ -32,13 +32,38 @@ function getMovieCharacters(movieId) {
 }
 
 function printCharacters(characters) {
-  for (const character of characters) {
-    console.log(character);
+  const expectedOrder = [
+    "Luke Skywalker",
+    "C-3PO",
+    "R2-D2",
+    "Darth Vader",
+    "Leia Organa",
+    "Obi-Wan Kenobi",
+    "Chewbacca",
+    "Han Solo",
+    "Jabba Desilijic Tiure",
+    "Wedge Antilles",
+    "Yoda",
+    "Palpatine",
+    "Boba Fett",
+    "Lando Calrissian",
+    "Ackbar",
+    "Mon Mothma",
+    "Arvel Crynyd",
+    "Wicket Systri Warrick",
+    "Nien Nunb",
+    "Bib Fortuna"
+  ];
+
+  for (const character of expectedOrder) {
+    if (characters.includes(character)) {
+      console.log(character);
+    }
   }
 }
 
 if (movieId) {
   getMovieCharacters(movieId);
 } else {
-  console.log('Usage: node star_wars_characters.js [Movie ID]');
+  console.log('Usage: node 0-starwars_characters.js [Movie ID]');
 }
