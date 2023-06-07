@@ -23,3 +23,12 @@ def rotate_2d_matrix(matrix):
             matrix[i][left], matrix[i][right] = matrix[i][right], matrix[i][left]
             left += 1
             right -= 1
+
+if __name__ == "__main__":
+    matrix = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+
+    rotate_2d_matrix(matrix)
+    print(matrix)
