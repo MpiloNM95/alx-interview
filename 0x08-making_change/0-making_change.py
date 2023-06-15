@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Changes come form within
+Changes come from within
 """
 
 
