@@ -19,16 +19,15 @@ def makeChange(coins, total):
         for coin in coins:
             if i - coin >= 0:
                 dp[i] = min(dp[i], dp[i - coin] + 1)
-    
+
     if dp[total] == float('inf'):
         return -1
-    
-    
+
     return dp[total]
 
 
 if __name__ == "__main__":
-    coin = [1, 2, 25]
+    coins = [1, 2, 25]
     total = 37
     result = makeChange(coins, total)
     print(result)
