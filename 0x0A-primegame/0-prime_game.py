@@ -1,9 +1,15 @@
 #!/usr/bin/python3
+"""
+Prime Game
+"""
 
-from typing import List
-
-def isWinner(x: int, nums: List[int]) -> str:
-    def is_prime(n: int) -> bool:
+def isWinner(x, nums):
+    """
+    Given a set of consecutive integers starting from 1 up to and including n,
+    hey take turns choosing a prime number from the set and removing that number
+    and its multiples from the set. The player that cannot make a move loses the game.
+    """
+    def is_prime(n):
         if n <= 1:
             return False
         for i in range(2, int(n**0.5) + 1):
@@ -11,7 +17,7 @@ def isWinner(x: int, nums: List[int]) -> str:
                 return False
         return True
 
-    def get_prime_count(n: int) -> int:
+    def get_prime_count(n):
         count = 0
         for i in range(2, n + 1):
             if is_prime(i):
